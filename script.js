@@ -17,16 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const createDropZone = (idx) => {
-    const dz = document.createElement("div");
-    dz.className = "drop-zone w-full h-8 bg-indigo-100/50 border-2 border-dashed border-indigo-300 rounded-xl my-2 flex items-center justify-center text-[10px] font-bold text-indigo-500";
-    dz.innerText = "MOVE HERE";
-    dz.onclick = () => {
+    const d = document.createElement("div"); 
+    d.className = "drop-zone";
+    d.innerHTML = "<span class='text-[10px] font-bold text-indigo-500 uppercase'>Drop Here</span>";
+    d.onclick = () => {
       const movedItem = items.splice(activeMoveIndex, 1)[0];
-      items.splice(idx, 0, movedItem);
+      items.splice(idx > activeMoveIndex ? idx - 1 : idx, 0, movedItem);
       activeMoveIndex = null;
       saveAndRefresh(false);
     };
-    return dz;
+    return d;
   };
 
   const renderTimeline = () => {
@@ -41,31 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if (item.type === 'milestone') {
         el.innerHTML = `
           <div class="dot top-1/2 -translate-y-1/2 bg-amber-500 z-10"></div>
-          <div class="milestone-box relative mx-auto max-w-[85%] shadow-lg">
-             <div class="absolute -top-3 right-0 flex gap-1 z-50">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-amber-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">MOVE</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">DELETE</button>
+          <div class="milestone-box relative mx-auto max-w-[90%] shadow-lg z-20">
+             <div class="absolute -top-6 right-0 flex gap-1 z-[60] button-group">
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg active:scale-90">MOVE</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg active:scale-90">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg active:scale-90">DELETE</button>
              </div>
-             <p class="text-[9px] font-bold text-amber-600 text-center uppercase">${window.formatDate(item.date)}</p>
-             <p class="text-lg font-black text-slate-800 text-center leading-tight">${item.title}</p>
+             <p class="text-[10px] font-bold text-amber-600 text-center uppercase mb-1">${window.formatDate(item.date)}</p>
+             <p class="text-xl font-black text-slate-800 text-center px-4 leading-tight">${item.title}</p>
           </div>`;
       } else {
         el.innerHTML = `
-          <div class="dot top-6 bg-indigo-600"></div>
-          <div class="timeline-content ${item.position || 'left'}">
-            <div class="timeline-text">
-              <h3 class="text-[10px] font-bold text-indigo-600 uppercase">${window.formatDate(item.date)}</h3>
-              <p class="text-sm font-bold leading-tight">${item.title}</p>
-            </div>
-            <div class="image-wrapper shadow-md">
-              <div class="absolute top-1 right-1 flex gap-1 z-50">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded text-[8px] font-bold shadow">MOVE</button>
-                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-2 py-1 rounded text-[8px] font-bold shadow">SWAP</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-white text-slate-800 px-2 py-1 rounded text-[8px] font-bold border shadow">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded text-[8px] font-bold shadow">DELETE</button>
+          <div class="dot top-6 bg-indigo-600 z-10"></div>
+          <div class="timeline-content ${item.position || 'left'} z-20">
+            <div class="timeline-text"><h3 class="text-xs font-bold text-indigo-600">${window.formatDate(item.date)}</h3><p class="text-lg font-bold">${item.title}</p></div>
+            <div class="image-wrapper relative bg-white rounded-xl shadow-lg h-48 md:h-56 overflow-hidden">
+              <div class="absolute top-2 right-2 flex gap-1 z-[60] button-group">
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-3 py-1 rounded shadow text-[10px] font-bold active:scale-90">MOVE</button>
+                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-3 py-1 rounded shadow text-[10px] font-bold active:scale-90">SWAP</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-white text-indigo-700 px-3 py-1 rounded shadow text-[10px] font-bold active:scale-90 border border-indigo-100">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-3 py-1 rounded shadow text-[10px] font-bold active:scale-90">DELETE</button>
               </div>
-              ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-200 flex items-center justify-center text-[8px] text-slate-400 font-bold">NO PHOTO</div>`}
+              ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-300 uppercase">No Photo</div>`}
             </div>
           </div>`;
       }
@@ -75,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.toggleReorderMode = (idx) => {
-    activeMoveIndex = activeMoveIndex === idx ? null : idx;
+    activeMoveIndex = (activeMoveIndex === idx) ? null : idx;
     renderTimeline();
   };
 
@@ -84,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.openEdit = (id) => {
-    currentEditId = id;
-    const item = items.find(i => i.id.toString() === id.toString());
+    currentEditId = id.toString();
+    const item = items.find(i => i.id.toString() === currentEditId);
     document.getElementById("edit-image-section").style.display = item.type === 'milestone' ? 'none' : 'block';
     document.getElementById("edit-title").value = item.title;
     document.getElementById("edit-date").value = item.date || "";
@@ -97,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById("updateBtn").onclick = () => {
-    const item = items.find(i => i.id.toString() === currentEditId.toString());
+    const item = items.find(i => i.id.toString() === currentEditId);
     item.title = document.getElementById("edit-title").value;
     item.date = document.getElementById("edit-date").value;
     item.note = document.getElementById("edit-note").value;
@@ -110,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById("removeImageBtn").onclick = () => {
-    const item = items.find(i => i.id.toString() === currentEditId.toString());
+    const item = items.find(i => i.id.toString() === currentEditId);
     if (item && confirm("Remove this photo?")) {
       item.image = null;
       document.getElementById("edit-image-preview").style.backgroundImage = 'none';

@@ -1,0 +1,59 @@
+html, body { -webkit-overflow-scrolling: touch; overflow-x: hidden; width: 100%; }
+* { -webkit-tap-highlight-color: transparent; }
+
+.timeline { position: relative; max-width: 1200px; margin: 0 auto; padding: 40px 0; }
+.timeline::before {
+  content: ""; position: absolute; left: 24px; top: 0; 
+  width: 2px; height: 100%; background: #cbd5e1; z-index: 5;
+}
+
+.dot { 
+  width: 16px; height: 16px; border-radius: 50%; 
+  position: absolute; left: 24px; transform: translateX(-50%); 
+  box-shadow: 0 0 0 5px white; 
+}
+
+/* BUTTON VISIBILITY LOGIC */
+/* Default (Mobile): Buttons are always visible */
+.button-group { opacity: 1 !important; transition: opacity 0.3s; }
+
+/* Desktop: Buttons hide until hover */
+@media (min-width: 1024px) {
+  .button-group { opacity: 0 !important; }
+  .group:hover .button-group { opacity: 1 !important; }
+}
+
+/* DESKTOP LAYOUT (SWAP WORKS HERE) */
+@media (min-width: 768px) {
+  .timeline::before { left: 50%; transform: translateX(-50%); }
+  .dot { left: 50%; width: 20px; height: 20px; }
+  
+  .timeline-content { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 80px; align-items: center; }
+  
+  /* Left Side Configuration */
+  .timeline-content.left .timeline-text { order: 1; text-align: right; }
+  .timeline-content.left .image-wrapper { order: 2; }
+  
+  /* Right Side Configuration */
+  .timeline-content.right .timeline-text { order: 2; text-align: left; }
+  .timeline-content.right .image-wrapper { order: 1; }
+}
+
+.milestone-box { 
+  background: white; border-top: 5px solid #f59e0b; padding: 1.5rem; 
+  border-radius: 1.25rem; position: relative; z-index: 20;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.drop-zone {
+  height: 50px; margin: 10px 40px; border: 2px dashed #6366f1; border-radius: 12px;
+  background: rgba(99, 102, 241, 0.05); display: flex; align-items: center; justify-content: center;
+  animation: pulseGhost 1.5s infinite; cursor: pointer; z-index: 30;
+}
+
+@keyframes pulseGhost { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* iOS Input Zoom Fix (Forces 16px font) */
+input, textarea { font-size: 16px !important; }
+
+#edit-image-preview, #image-preview { width: 64px; height: 64px; border-radius: 12px; background-size: cover; background-position: center; border: 1px solid #e2e8f0; }

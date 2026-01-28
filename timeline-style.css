@@ -1,15 +1,18 @@
 html, body { -webkit-overflow-scrolling: touch; overflow-x: hidden; width: 100%; }
 * { -webkit-tap-highlight-color: transparent; }
 
+/* Prevent iPhone Zoom on Input */
+input, textarea { font-size: 16px !important; }
+
 .timeline { position: relative; max-width: 1200px; margin: 0 auto; padding: 40px 0; }
 .timeline::before {
-  content: ""; position: absolute; left: 50%; transform: translateX(-50%); 
-  top: 0; width: 2px; height: 100%; background: #cbd5e1; z-index: 5;
+  content: ""; position: absolute; left: 24px; top: 0; 
+  width: 2px; height: 100%; background: #cbd5e1; z-index: 5;
 }
 
 .dot { 
   width: 14px; height: 14px; border-radius: 50%; 
-  position: absolute; left: 50%; transform: translateX(-50%); 
+  position: absolute; left: 24px; transform: translateX(-50%); 
   box-shadow: 0 0 0 4px white; z-index: 10;
 }
 
@@ -22,9 +25,9 @@ html, body { -webkit-overflow-scrolling: touch; overflow-x: hidden; width: 100%;
 .milestone-box { background: white; border-top: 4px solid #f59e0b; padding: 1rem; border-radius: 1rem; position: relative; z-index: 20; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .image-wrapper { height: 130px; border-radius: 0.75rem; overflow: hidden; position: relative; background: #eee; }
 
-input, textarea { font-size: 16px !important; border: 1px solid #ddd; outline: none; }
-
 @media (min-width: 768px) {
+  .timeline::before { left: 50%; transform: translateX(-50%); }
+  .dot { left: 50%; width: 18px; height: 18px; }
   .image-wrapper { height: 220px; }
-  .timeline-content { gap: 80px; }
+  .timeline-content { gap: 60px; }
 }

@@ -52,26 +52,40 @@
 </div>
 
 <div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-    <h2 class="text-2xl font-black mb-4">Edit Details</h2>
-    <div id="edit-image-section" class="mb-4">
-      <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border border-slate-200 flex items-center justify-center text-slate-400 text-[10px] font-bold"></div>
-      <div class="flex flex-col gap-2">
-        <input type="file" id="edit-image-input" accept="image/*" class="text-xs">
-        <button id="removeImageBtn" class="text-red-500 text-[10px] font-black uppercase bg-red-50 py-2 rounded-lg">Remove Photo</button>
+  <div class="bg-white w-full max-w-md rounded-3xl flex flex-col shadow-2xl max-h-[90vh] overflow-hidden">
+    <div class="p-5 border-b flex justify-between items-center">
+      <h2 class="text-xl font-black uppercase">Edit Item</h2>
+      <button id="deleteBtnModal" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-3 py-1 rounded-lg">Delete Item</button>
+    </div>
+    
+    <div class="p-5 overflow-y-auto space-y-4">
+      <div id="edit-image-section">
+        <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border flex items-center justify-center text-slate-400 font-bold text-[10px]"></div>
+        <div class="flex flex-col gap-2">
+          <input type="file" id="edit-image-input" accept="image/*" class="text-xs">
+          <button id="removeImageBtn" class="text-red-600 text-[10px] font-black uppercase bg-red-50 py-3 rounded-lg border border-red-100">Remove Photo</button>
+        </div>
+      </div>
+
+      <div>
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Date</label>
+        <input type="date" id="edit-date" class="w-full border-2 rounded-xl p-3 text-base outline-none">
+      </div>
+
+      <div>
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Title</label>
+        <input type="text" id="edit-title" class="w-full border-2 rounded-xl p-3 text-base outline-none">
+      </div>
+
+      <div>
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Details</label>
+        <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-24 outline-none"></textarea>
       </div>
     </div>
-    <div class="space-y-3">
-      <input type="date" id="edit-date" class="w-full border-2 rounded-xl p-3 text-base">
-      <input type="text" id="edit-title" class="w-full border-2 rounded-xl p-3 text-base">
-      <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-24"></textarea>
-    </div>
-    <div class="flex justify-between items-center mt-6 pt-4 border-t">
-      <button id="deleteBtnModal" class="text-red-500 text-xs font-black uppercase">Delete Item</button>
-      <div class="flex gap-2">
-        <button onclick="window.toggleModal('editModal', false)" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">Cancel</button>
-        <button id="updateBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold">Save</button>
-      </div>
+
+    <div class="p-5 border-t bg-slate-50 flex gap-3">
+      <button onclick="window.toggleModal('editModal', false)" class="flex-1 py-3 bg-white border rounded-xl font-bold">Cancel</button>
+      <button id="updateBtn" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold">Save Changes</button>
     </div>
   </div>
 </div>

@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="dot top-1/2 -translate-y-1/2 bg-amber-500 z-10"></div>
           <div class="milestone-box relative mx-auto max-w-[85%] shadow-lg z-20">
              <div class="absolute -top-6 right-0 flex gap-1 z-[60] button-group">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">MOVE</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">DELETE</button>
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">MOVE</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">DELETE</button>
              </div>
              <p class="text-[9px] font-bold text-amber-600 text-center uppercase mb-1">${window.formatDate(item.date)}</p>
              <p class="text-base font-black text-slate-800 text-center px-2 leading-tight">${item.title}</p>
@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="image-wrapper relative bg-white rounded-xl shadow-md overflow-hidden">
               <div class="absolute top-1 right-1 flex gap-1 z-[60] button-group">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">MOVE</button>
-                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">SWAP</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-white text-indigo-700 px-1.5 py-0.5 rounded text-[7px] font-bold border active:scale-90">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">DELETE</button>
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">MOVE</button>
+                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">SWAP</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-white text-indigo-700 px-1.5 py-0.5 rounded text-[7px] font-bold border">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">DELETE</button>
               </div>
               ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-100 flex items-center justify-center text-[7px] font-bold text-slate-300 uppercase">No Photo</div>`}
             </div>

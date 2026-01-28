@@ -16,19 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTimeline();
   };
 
-  const createDropZone = (idx) => {
-    const d = document.createElement("div"); 
-    d.className = "drop-zone";
-    d.innerHTML = "<span class='text-[10px] font-bold text-indigo-500 uppercase'>Drop Here</span>";
-    d.onclick = () => {
-      const movedItem = items.splice(activeMoveIndex, 1)[0];
-      items.splice(idx > activeMoveIndex ? idx - 1 : idx, 0, movedItem);
-      activeMoveIndex = null;
-      saveAndRefresh(false);
-    };
-    return d;
-  };
-
   const renderTimeline = () => {
     if (!timeline) return;
     timeline.innerHTML = "";
@@ -41,11 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (item.type === 'milestone') {
         el.innerHTML = `
           <div class="dot top-1/2 -translate-y-1/2 bg-amber-500 z-10"></div>
-          <div class="milestone-box relative mx-auto max-w-[80%] shadow-lg z-20">
+          <div class="milestone-box relative mx-auto max-w-[85%] shadow-lg z-20">
              <div class="absolute -top-6 right-0 flex gap-1 z-[60] button-group">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">MOVE</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg">DELETE</button>
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">MOVE</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow-lg active:scale-90">DELETE</button>
              </div>
              <p class="text-[9px] font-bold text-amber-600 text-center uppercase mb-1">${window.formatDate(item.date)}</p>
              <p class="text-base font-black text-slate-800 text-center px-2 leading-tight">${item.title}</p>
@@ -60,10 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="image-wrapper relative bg-white rounded-xl shadow-md overflow-hidden">
               <div class="absolute top-1 right-1 flex gap-1 z-[60] button-group">
-                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">MOVE</button>
-                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">SWAP</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-white text-indigo-700 px-1.5 py-0.5 rounded text-[7px] font-bold border">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold">DELETE</button>
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">MOVE</button>
+                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">SWAP</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-white text-indigo-700 px-1.5 py-0.5 rounded text-[7px] font-bold border active:scale-90">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[7px] font-bold active:scale-90">DELETE</button>
               </div>
               ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-100 flex items-center justify-center text-[7px] font-bold text-slate-300 uppercase">No Photo</div>`}
             </div>
@@ -74,26 +61,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  window.toggleReorderMode = (idx) => {
-    activeMoveIndex = (activeMoveIndex === idx) ? null : idx;
-    renderTimeline();
+  const createDropZone = (idx) => {
+    const d = document.createElement("div"); d.className = "drop-zone";
+    d.innerHTML = "<span class='text-[10px] font-bold text-indigo-500 uppercase'>Drop Here</span>";
+    d.onclick = () => {
+      const movedItem = items.splice(activeMoveIndex, 1)[0];
+      items.splice(idx > activeMoveIndex ? idx - 1 : idx, 0, movedItem);
+      activeMoveIndex = null;
+      saveAndRefresh(false);
+    };
+    return d;
   };
 
-  window.toggleModal = (id, show) => {
-    document.getElementById(id).classList.toggle("hidden", !show);
+  window.formatDate = (iso) => {
+    if (!iso) return "No Date";
+    const d = new Date(iso.replace(/-/g, "/"));
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
 
+  window.toggleModal = (id, show) => { document.getElementById(id).classList.toggle("hidden", !show); };
+  window.toggleReorderMode = (idx) => { activeMoveIndex = (activeMoveIndex === idx) ? null : idx; renderTimeline(); };
+  window.toggleSide = (id) => {
+    const item = items.find(i => i.id.toString() === id.toString());
+    if(item) { item.position = item.position === 'right' ? 'left' : 'right'; saveAndRefresh(false); }
+  };
+  window.deleteItem = (id) => {
+    if (confirm("Delete permanently?")) { items = items.filter(i => i.id.toString() !== id.toString()); saveAndRefresh(); }
+  };
+  
   window.openEdit = (id) => {
     currentEditId = id.toString();
     const item = items.find(i => i.id.toString() === currentEditId);
-    document.getElementById("edit-image-section").style.display = item.type === 'milestone' ? 'none' : 'block';
+    document.getElementById("edit-image-section").style.display = item.type === 'milestone' ? 'none' : 'flex';
     document.getElementById("edit-title").value = item.title;
     document.getElementById("edit-date").value = item.date || "";
     document.getElementById("edit-note").value = item.note || "";
-    const preview = document.getElementById("edit-image-preview");
-    preview.style.backgroundImage = item.image ? `url(${item.image})` : 'none';
-    preview.innerHTML = item.image ? "" : "NO PHOTO";
+    document.getElementById("edit-image-preview").style.backgroundImage = item.image ? `url(${item.image})` : 'none';
     window.toggleModal('editModal', true);
+  };
+
+  document.getElementById("saveBtn").onclick = () => {
+    const file = document.getElementById("imageInput").files[0];
+    const newItem = { id: Date.now().toString(), title: document.getElementById("titleInput").value || "Memory", date: document.getElementById("timeline-date").value, note: document.getElementById("noteInput").value, type: 'memory', position: 'left' };
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => { newItem.image = e.target.result; items.push(newItem); saveAndRefresh(); window.toggleModal('modal', false); };
+      reader.readAsDataURL(file);
+    } else { items.push(newItem); saveAndRefresh(); window.toggleModal('modal', false); }
+  };
+
+  document.getElementById("milestoneOkBtn").onclick = () => {
+    items.push({ id: Date.now().toString(), title: document.getElementById("milestoneTitle").value || "Milestone", type: 'milestone', date: document.getElementById("milestone-date-input").value });
+    saveAndRefresh(); window.toggleModal('milestoneModal', false);
   };
 
   document.getElementById("updateBtn").onclick = () => {
@@ -111,44 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("removeImageBtn").onclick = () => {
     const item = items.find(i => i.id.toString() === currentEditId);
-    if (item && confirm("Remove photo?")) {
+    if (item && confirm("Remove this photo?")) {
       item.image = null;
       document.getElementById("edit-image-preview").style.backgroundImage = 'none';
-      document.getElementById("edit-image-preview").innerHTML = "REMOVED";
     }
-  };
-
-  window.toggleSide = (id) => {
-    const item = items.find(i => i.id.toString() === id.toString());
-    if (item) { item.position = item.position === 'right' ? 'left' : 'right'; saveAndRefresh(false); }
-  };
-
-  window.deleteItem = (id) => {
-    if (confirm("Delete permanently?")) {
-      items = items.filter(i => i.id.toString() !== id.toString());
-      saveAndRefresh();
-    }
-  };
-
-  window.formatDate = (iso) => {
-    if (!iso) return "No Date";
-    const d = new Date(iso.replace(/-/g, "/"));
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  };
-
-  document.getElementById("saveBtn").onclick = () => {
-    const file = document.getElementById("imageInput").files[0];
-    const newItem = { id: Date.now().toString(), title: document.getElementById("titleInput").value || "Memory", date: document.getElementById("timeline-date").value, note: document.getElementById("noteInput").value, type: 'memory', position: 'left' };
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => { newItem.image = e.target.result; items.push(newItem); saveAndRefresh(); window.toggleModal('modal', false); };
-      reader.readAsDataURL(file);
-    } else { items.push(newItem); saveAndRefresh(); window.toggleModal('modal', false); }
-  };
-
-  document.getElementById("milestoneOkBtn").onclick = () => {
-    items.push({ id: Date.now().toString(), title: document.getElementById("milestoneTitle").value || "Milestone", type: 'milestone', date: document.getElementById("milestone-date-input").value });
-    saveAndRefresh(); window.toggleModal('milestoneModal', false);
   };
 
   document.getElementById("addBtn").onclick = () => window.toggleModal('modal', true);

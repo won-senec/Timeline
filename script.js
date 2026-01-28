@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeline = document.querySelector(".timeline");
   let items = JSON.parse(localStorage.getItem("timelineData")) || [];
   let currentEditId = null;
+  let activeMoveIndex = null;
 
   const saveAndRefresh = (doSort = true) => {
     if (doSort) {
@@ -15,20 +16,36 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTimeline();
   };
 
+  const createDropZone = (idx) => {
+    const dz = document.createElement("div");
+    dz.className = "drop-zone w-full h-8 bg-indigo-100/50 border-2 border-dashed border-indigo-300 rounded-xl my-2 flex items-center justify-center text-[10px] font-bold text-indigo-500";
+    dz.innerText = "MOVE HERE";
+    dz.onclick = () => {
+      const movedItem = items.splice(activeMoveIndex, 1)[0];
+      items.splice(idx, 0, movedItem);
+      activeMoveIndex = null;
+      saveAndRefresh(false);
+    };
+    return dz;
+  };
+
   const renderTimeline = () => {
     if (!timeline) return;
     timeline.innerHTML = "";
-    items.forEach((item) => {
+    items.forEach((item, index) => {
+      if (activeMoveIndex !== null && index === 0) timeline.appendChild(createDropZone(0));
+      
       const el = document.createElement("div");
-      el.className = "timeline-item mb-12 relative group";
+      el.className = `timeline-item mb-12 relative group ${activeMoveIndex === index ? 'opacity-30' : ''}`;
       
       if (item.type === 'milestone') {
         el.innerHTML = `
           <div class="dot top-1/2 -translate-y-1/2 bg-amber-500 z-10"></div>
           <div class="milestone-box relative mx-auto max-w-[85%] shadow-lg">
-             <div class="absolute -top-3 right-0 flex gap-1">
-                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[9px] font-bold">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[9px] font-bold">DELETE</button>
+             <div class="absolute -top-3 right-0 flex gap-1 z-50">
+                <button onclick="window.toggleReorderMode(${index})" class="bg-amber-600 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">MOVE</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-slate-800 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded-full text-[8px] font-bold shadow">DELETE</button>
              </div>
              <p class="text-[9px] font-bold text-amber-600 text-center uppercase">${window.formatDate(item.date)}</p>
              <p class="text-lg font-black text-slate-800 text-center leading-tight">${item.title}</p>
@@ -43,16 +60,23 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="image-wrapper shadow-md">
               <div class="absolute top-1 right-1 flex gap-1 z-50">
-                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-2 py-1 rounded text-[8px] font-bold">SWAP</button>
-                <button onclick="window.openEdit('${item.id}')" class="bg-white text-slate-800 px-2 py-1 rounded text-[8px] font-bold border">EDIT</button>
-                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded text-[8px] font-bold">DELETE</button>
+                <button onclick="window.toggleReorderMode(${index})" class="bg-indigo-600 text-white px-2 py-1 rounded text-[8px] font-bold shadow">MOVE</button>
+                <button onclick="window.toggleSide('${item.id}')" class="bg-sky-500 text-white px-2 py-1 rounded text-[8px] font-bold shadow">SWAP</button>
+                <button onclick="window.openEdit('${item.id}')" class="bg-white text-slate-800 px-2 py-1 rounded text-[8px] font-bold border shadow">EDIT</button>
+                <button onclick="window.deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded text-[8px] font-bold shadow">DELETE</button>
               </div>
-              ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-200 flex items-center justify-center text-[8px] text-slate-400 font-bold uppercase">No Photo</div>`}
+              ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<div class="h-full bg-slate-200 flex items-center justify-center text-[8px] text-slate-400 font-bold">NO PHOTO</div>`}
             </div>
           </div>`;
       }
       timeline.appendChild(el);
+      if (activeMoveIndex !== null) timeline.appendChild(createDropZone(index + 1));
     });
+  };
+
+  window.toggleReorderMode = (idx) => {
+    activeMoveIndex = activeMoveIndex === idx ? null : idx;
+    renderTimeline();
   };
 
   window.toggleModal = (id, show) => {
@@ -77,20 +101,12 @@ document.addEventListener("DOMContentLoaded", () => {
     item.title = document.getElementById("edit-title").value;
     item.date = document.getElementById("edit-date").value;
     item.note = document.getElementById("edit-note").value;
-
     const file = document.getElementById("edit-image-input").files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        item.image = e.target.result;
-        saveAndRefresh();
-        window.toggleModal('editModal', false);
-      };
+      reader.onload = (e) => { item.image = e.target.result; saveAndRefresh(); window.toggleModal('editModal', false); };
       reader.readAsDataURL(file);
-    } else {
-      saveAndRefresh();
-      window.toggleModal('editModal', false);
-    }
+    } else { saveAndRefresh(); window.toggleModal('editModal', false); }
   };
 
   document.getElementById("removeImageBtn").onclick = () => {
@@ -99,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
       item.image = null;
       document.getElementById("edit-image-preview").style.backgroundImage = 'none';
       document.getElementById("edit-image-preview").innerHTML = "REMOVED";
-      // This change is saved when updateBtn is clicked.
     }
   };
 

@@ -43,7 +43,7 @@
   <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl text-center">
     <h2 class="text-xl font-black mb-6 text-amber-600 uppercase">New Milestone</h2>
     <input type="date" id="milestone-date-input" class="w-full border-2 rounded-xl p-3 mb-4 text-base">
-    <textarea id="milestoneTitle" placeholder="What happened?" class="w-full border-2 rounded-xl p-4 text-lg font-bold mb-6" rows="3"></textarea>
+    <textarea id="milestoneTitle" placeholder="Achievement..." class="w-full border-2 rounded-xl p-4 text-center text-lg font-bold mb-6" rows="3"></textarea>
     <div class="flex gap-3">
       <button onclick="window.toggleModal('milestoneModal', false)" class="flex-1 py-3 bg-slate-100 rounded-xl font-bold">Cancel</button>
       <button id="milestoneOkBtn" class="flex-1 py-3 bg-amber-500 text-white rounded-xl font-bold">Add</button>
@@ -52,14 +52,15 @@
 </div>
 
 <div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-3xl flex flex-col shadow-2xl max-h-[90vh] overflow-hidden">
-    <div class="p-5 border-b flex justify-between items-center">
-      <h2 class="text-xl font-black uppercase">Edit Item</h2>
-      <button id="deleteBtnModal" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-3 py-1 rounded-lg">Delete Item</button>
+  <div class="bg-white w-full max-w-md rounded-3xl flex flex-col shadow-2xl max-h-[85vh] overflow-hidden">
+    <div class="p-5 border-b flex justify-between items-center bg-white">
+      <h2 class="text-xl font-black uppercase">Edit Details</h2>
+      <button id="deleteBtnModal" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-3 py-1 rounded-lg">Delete</button>
     </div>
     
-    <div class="p-5 overflow-y-auto space-y-4">
+    <div class="p-5 overflow-y-auto flex-1 space-y-4">
       <div id="edit-image-section">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Photo</label>
         <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border flex items-center justify-center text-slate-400 font-bold text-[10px]"></div>
         <div class="flex flex-col gap-2">
           <input type="file" id="edit-image-input" accept="image/*" class="text-xs">
@@ -84,8 +85,8 @@
     </div>
 
     <div class="p-5 border-t bg-slate-50 flex gap-3">
-      <button onclick="window.toggleModal('editModal', false)" class="flex-1 py-3 bg-white border rounded-xl font-bold">Cancel</button>
-      <button id="updateBtn" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold">Save Changes</button>
+      <button onclick="window.toggleModal('editModal', false)" class="flex-1 py-4 bg-white border rounded-xl font-bold">Cancel</button>
+      <button id="updateBtn" class="flex-1 py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-lg">Save</button>
     </div>
   </div>
 </div>

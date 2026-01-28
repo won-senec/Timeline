@@ -54,8 +54,8 @@
 <div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
   <div class="bg-white w-full max-w-md rounded-3xl flex flex-col shadow-2xl max-h-[85vh] overflow-hidden">
     <div class="p-5 border-b flex justify-between items-center bg-white">
-      <h2 class="text-xl font-black uppercase">Edit Item</h2>
-      <button id="deleteBtnModal" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-3 py-1 rounded-lg active:bg-red-100">Delete</button>
+      <h2 class="text-xl font-black uppercase">Edit Details</h2>
+      <button id="deleteBtnModal" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-3 py-1 rounded-lg">Delete</button>
     </div>
     
     <div class="p-5 overflow-y-auto flex-1 space-y-4">
@@ -63,30 +63,30 @@
         <label class="text-[10px] font-bold text-slate-400 uppercase">Photo</label>
         <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border flex items-center justify-center text-slate-400 font-bold text-[10px]"></div>
         <div class="flex flex-col gap-2">
-          <input type="file" id="edit-image-input" accept="image/*" class="text-xs w-full bg-slate-50 p-2 rounded-lg">
-          <button id="removeImageBtn" class="text-red-600 text-[10px] font-black uppercase bg-red-50 py-3 rounded-lg border border-red-100 active:bg-red-100">Remove Current Photo</button>
+          <input type="file" id="edit-image-input" accept="image/*" class="text-xs">
+          <button id="removeImageBtn" class="text-red-600 text-[10px] font-black uppercase bg-red-50 py-3 rounded-lg border border-red-100 active:bg-red-100">Remove Photo</button>
         </div>
       </div>
 
       <div>
         <label class="text-[10px] font-bold text-slate-400 uppercase">Date</label>
-        <input type="date" id="edit-date" class="w-full border-2 rounded-xl p-3 text-base outline-none focus:border-indigo-500">
+        <input type="date" id="edit-date" class="w-full border-2 rounded-xl p-3 text-base">
       </div>
 
       <div>
         <label class="text-[10px] font-bold text-slate-400 uppercase">Title</label>
-        <input type="text" id="edit-title" class="w-full border-2 rounded-xl p-3 text-base outline-none focus:border-indigo-500">
+        <input type="text" id="edit-title" class="w-full border-2 rounded-xl p-3 text-base">
       </div>
 
       <div>
         <label class="text-[10px] font-bold text-slate-400 uppercase">Details</label>
-        <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-24 outline-none focus:border-indigo-500"></textarea>
+        <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-24"></textarea>
       </div>
     </div>
 
     <div class="p-5 border-t bg-slate-50 flex gap-3">
-      <button onclick="window.toggleModal('editModal', false)" class="flex-1 py-4 bg-white border rounded-xl font-bold">Cancel</button>
-      <button id="updateBtn" class="flex-1 py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-lg active:scale-95">Save Changes</button>
+      <button onclick="window.toggleModal('editModal', false)" class="flex-1 py-4 bg-white border rounded-xl font-bold text-sm">Cancel</button>
+      <button id="updateBtn" class="flex-1 py-4 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-lg">Save</button>
     </div>
   </div>
 </div>

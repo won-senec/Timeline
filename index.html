@@ -4,17 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Life Journey</title>
-  
   <script src="https://cdn.tailwindcss.com"></script>
-  
   <link rel="stylesheet" href="timeline-style.css">
-
   <link rel="apple-touch-icon" href="icon.png">
-  
   <meta name="apple-mobile-web-app-capable" content="yes">
-  
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
   <meta name="apple-mobile-web-app-title" content="My Journey">
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -31,31 +25,6 @@
 <main class="container mx-auto px-4 py-8">
   <div class="timeline"></div>
 </main>
-
-<div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl">
-    <h2 class="text-2xl font-black mb-6">Edit Details</h2>
-    <div id="edit-image-section" class="flex items-center gap-4 mb-4 p-4 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-      <div id="edit-image-preview" class="w-16 h-16 bg-slate-200 rounded-xl bg-cover bg-center border border-slate-300"></div>
-      <div class="flex-1">
-        <input type="file" id="edit-image-input" accept="image/*" class="w-full text-xs mb-1">
-        <button id="removeImageBtn" class="text-red-500 text-[10px] font-bold uppercase">Remove Photo</button>
-      </div>
-    </div>
-    <div class="space-y-4">
-      <input type="date" id="edit-date" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base outline-none">
-      <input type="text" id="edit-title" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base outline-none">
-      <textarea id="edit-note" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base h-20 outline-none"></textarea>
-    </div>
-    <div class="flex justify-between items-center mt-8">
-      <button id="deleteBtnModal" class="text-red-500 text-xs font-black uppercase">Delete Item</button>
-      <div class="flex gap-2">
-        <button onclick="window.toggleModal('editModal', false)" class="px-4 py-2 bg-slate-100 rounded-xl font-bold text-sm">Cancel</button>
-        <button id="updateBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold text-sm">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div id="modal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
   <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl">
@@ -79,6 +48,31 @@
     <div class="flex gap-3">
       <button onclick="window.toggleModal('milestoneModal', false)" class="flex-1 py-3 bg-slate-100 rounded-xl font-bold">Cancel</button>
       <button id="milestoneOkBtn" class="flex-1 py-3 bg-amber-500 text-white rounded-xl font-bold">Add</button>
+    </div>
+  </div>
+</div>
+
+<div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl">
+    <h2 class="text-2xl font-black mb-6">Edit Details</h2>
+    <div id="edit-image-section" class="flex items-center gap-4 mb-4 p-4 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+      <div id="edit-image-preview" class="w-16 h-16 bg-slate-200 rounded-xl bg-cover bg-center border border-slate-300"></div>
+      <div class="flex-1">
+        <input type="file" id="edit-image-input" accept="image/*" class="w-full text-xs mb-1">
+        <button id="removeImageBtn" class="text-red-500 text-[10px] font-bold uppercase">Remove Photo</button>
+      </div>
+    </div>
+    <div class="space-y-4">
+      <input type="date" id="edit-date" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base outline-none">
+      <input type="text" id="edit-title" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base outline-none">
+      <textarea id="edit-note" class="w-full border-2 border-slate-100 rounded-xl p-3 text-base h-20 outline-none"></textarea>
+    </div>
+    <div class="flex justify-between items-center mt-8">
+      <button id="deleteBtnModal" class="text-red-500 text-xs font-black uppercase">Delete Item</button>
+      <div class="flex gap-2">
+        <button onclick="window.toggleModal('editModal', false)" class="px-4 py-2 bg-slate-100 rounded-xl font-bold text-sm">Cancel</button>
+        <button id="updateBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold text-sm">Save</button>
+      </div>
     </div>
   </div>
 </div>

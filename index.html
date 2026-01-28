@@ -13,7 +13,7 @@
 <body class="bg-slate-50 text-slate-900 antialiased">
 
 <header class="bg-slate-900 text-white py-10 text-center shadow-xl">
-  <h1 class="text-3xl font-black tracking-tight uppercase">Our Journey</h1>
+  <h1 class="text-3xl font-black tracking-tight uppercase">Story of Mindy & Won</h1>
 </header>
 
 <div class="fixed top-6 right-6 z-[200] flex flex-col gap-3">
@@ -26,12 +26,12 @@
 </main>
 
 <div id="modal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl">
+  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
     <h2 class="text-2xl font-black mb-6">New Memory</h2>
     <input type="file" id="imageInput" accept="image/*" class="w-full text-xs mb-4">
-    <input type="date" id="timeline-date" class="w-full border-2 rounded-xl p-3 mb-3 text-base outline-none">
-    <input type="text" id="titleInput" placeholder="Title" class="w-full border-2 rounded-xl p-3 mb-3 text-base outline-none">
-    <textarea id="noteInput" placeholder="Details..." class="w-full border-2 rounded-xl p-3 mb-6 text-base outline-none"></textarea>
+    <input type="date" id="timeline-date" class="w-full border-2 rounded-xl p-3 mb-3 text-base">
+    <input type="text" id="titleInput" placeholder="Title" class="w-full border-2 rounded-xl p-3 mb-3 text-base">
+    <textarea id="noteInput" placeholder="Details..." class="w-full border-2 rounded-xl p-3 mb-6 text-base"></textarea>
     <div class="flex gap-3">
       <button onclick="window.toggleModal('modal', false)" class="flex-1 py-3 bg-slate-100 rounded-xl font-bold">Cancel</button>
       <button id="saveBtn" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold">Add</button>
@@ -42,8 +42,8 @@
 <div id="milestoneModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
   <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl text-center">
     <h2 class="text-xl font-black mb-6 text-amber-600 uppercase">New Milestone</h2>
-    <input type="date" id="milestone-date-input" class="w-full border-2 rounded-xl p-3 mb-4 text-base outline-none">
-    <textarea id="milestoneTitle" placeholder="What happened?" class="w-full border-2 rounded-xl p-4 text-lg font-bold mb-6 outline-none" rows="3"></textarea>
+    <input type="date" id="milestone-date-input" class="w-full border-2 rounded-xl p-3 mb-4 text-base">
+    <textarea id="milestoneTitle" placeholder="What happened?" class="w-full border-2 rounded-xl p-4 text-lg font-bold mb-6" rows="3"></textarea>
     <div class="flex gap-3">
       <button onclick="window.toggleModal('milestoneModal', false)" class="flex-1 py-3 bg-slate-100 rounded-xl font-bold">Cancel</button>
       <button id="milestoneOkBtn" class="flex-1 py-3 bg-amber-500 text-white rounded-xl font-bold">Add</button>
@@ -52,24 +52,21 @@
 </div>
 
 <div id="editModal" class="fixed inset-0 z-[300] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl">
+  <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
     <h2 class="text-2xl font-black mb-4">Edit Details</h2>
-    
     <div id="edit-image-section" class="mb-4">
-      <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border border-slate-200"></div>
-      <div class="flex items-center justify-between">
+      <div id="edit-image-preview" class="w-full h-32 bg-slate-100 rounded-xl bg-cover bg-center mb-2 border border-slate-200 flex items-center justify-center text-slate-400 text-[10px] font-bold"></div>
+      <div class="flex flex-col gap-2">
         <input type="file" id="edit-image-input" accept="image/*" class="text-xs">
-        <button id="removeImageBtn" class="text-red-500 text-[10px] font-black uppercase bg-red-50 px-2 py-1 rounded">Remove Photo</button>
+        <button id="removeImageBtn" class="text-red-500 text-[10px] font-black uppercase bg-red-50 py-2 rounded-lg">Remove Photo</button>
       </div>
     </div>
-
     <div class="space-y-3">
       <input type="date" id="edit-date" class="w-full border-2 rounded-xl p-3 text-base">
       <input type="text" id="edit-title" class="w-full border-2 rounded-xl p-3 text-base">
-      <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-20"></textarea>
+      <textarea id="edit-note" class="w-full border-2 rounded-xl p-3 text-base h-24"></textarea>
     </div>
-
-    <div class="flex justify-between items-center mt-6">
+    <div class="flex justify-between items-center mt-6 pt-4 border-t">
       <button id="deleteBtnModal" class="text-red-500 text-xs font-black uppercase">Delete Item</button>
       <div class="flex gap-2">
         <button onclick="window.toggleModal('editModal', false)" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">Cancel</button>

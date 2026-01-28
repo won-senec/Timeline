@@ -19,7 +19,12 @@ html, body { -webkit-overflow-scrolling: touch; overflow-x: hidden; width: 100%;
 .timeline-content.right .timeline-text { order: 2; text-align: left; }
 .timeline-content.right .image-wrapper { order: 1; }
 
-.button-group { opacity: 1 !important; z-index: 50; }
 .milestone-box { background: white; border-top: 4px solid #f59e0b; padding: 1rem; border-radius: 1rem; position: relative; z-index: 20; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .image-wrapper { height: 130px; border-radius: 0.75rem; overflow: hidden; position: relative; background: #eee; }
-input, textarea { font-size: 16px !important; border: 1px solid #ddd; }
+
+input, textarea { font-size: 16px !important; border: 1px solid #ddd; outline: none; }
+
+@media (min-width: 768px) {
+  .image-wrapper { height: 220px; }
+  .timeline-content { gap: 80px; }
+}

@@ -50,6 +50,7 @@ input, textarea { font-size: 16px !important; }
   }
 }
 
+
 .milestone-box { 
   background: white; border-top: 5px solid #f59e0b; padding: 1rem; 
   border-radius: 1.25rem; position: relative; z-index: 20;

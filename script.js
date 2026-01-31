@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     saveAndRefresh(); window.toggleModal('milestoneModal', false);
   };
 
+  
   document.getElementById("updateBtn").onclick = () => {
     const item = items.find(i => i.id.toString() === currentEditId);
     item.title = document.getElementById("edit-title").value;
